@@ -6,4 +6,33 @@ output: github_document
 library(tidyverse)
 ```
 
+
 This document will show how to import data.
+
+## Import the FAS Litters CSV and Fixing Column Names 
+```{r}
+litters_df = read_csv("data/FAS_litters.csv")
+litters_df = janitor::clean_names(litters_df)
+```
+Only using clean names function inside janitor package so we aren't going to load whole janitor package
+
+
+## Look at the dataset
+```{r}
+litters_df
+
+head(litters_df)
+tail(litters_df, 10)
+```
+
+```{r eval= FALSE}
+view(litters_df)
+```
+Want this to be False when using view bc when you knit it it gets confused
+
+
+
+
+
+
+
