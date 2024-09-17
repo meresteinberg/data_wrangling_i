@@ -1,0 +1,9 @@
+---
+title: "Data Import"
+output: github_document
+---
+```{r setup, echo = FALSE, message= FALSE}
+library(tidyverse)
+```
+
+This document will show how to import data.
