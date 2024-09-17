@@ -4,6 +4,8 @@ output: github_document
 ---
 ```{r setup, echo = FALSE, message= FALSE}
 library(tidyverse)
+library(readxl)
+library(haven)
 ```
 
 
@@ -30,9 +32,90 @@ view(litters_df)
 ```
 Want this to be False when using view bc when you knit it it gets confused
 
+## Learning Assessement Load FAS_Pups.CSV
+use relative paths
+```{r}
+pups_df = read_csv("data/FAS_pups.csv")
+pups_df = janitor::clean_names(pups_df)
+pups_df
+```
+
+use absolute path is putting whole path of file (couldnt make it work in class)
+```{r eval=FALSE}
+pups_df=read.csv(("/home/Desktop/data_wrangling_i  "))
+```
+
+## Look at read csv options
+
+col_names and skipping rows
+
+```{r}
+litters_df=
+  read_csv(
+    file="data/FAS_litters.csv",
+    col_names=FALSE,
+    skip=1
+  )
+```
+skipping line bc of excel file data starts at second line
+
+What about missing data
+```{r}
+litters_df=
+  read_csv(
+    file="data/FAS_litters.csv",
+    na = c("NA", "", ".")
+  )
+view(litters_df)
+```
+listing three things in c function that are missing values so they all read NA 
+
+Looking at a specific column
+```{r}
+litters_df=janitor::clean_names((litters_df))
+pull(litters_df, gd0_weight)
+```
+
+What if we code 'group' as a factor variable?
+```{r}
+litters_df=
+  read_csv(
+    file= "data/FAS_litters.csv",
+    na = c("NA", "", "."),
+    col_types = cols(
+      Group= col_factor()
+    )
+  )
+```
 
 
+## Import excel file
 
+import MLB 2011 summary data
+
+```{r}
+mlb_df = read_excel("data/mlb11.xlsx", sheet="mlb11") 
+mlb_df
+```
+
+## Import SAS data
+
+```{r}
+pulse_df=read_sas("data/public_pulse_data.sas7bdat")
+pulse_df
+```
+
+## Never use read.csv() 
+
+```{r}
+litters_df= read.csv("data/FAS_litters.csv")
+litters_df
+```
+
+Never do this either bc we are taking a variable out of a dataframe
+```{r}
+litters_df$L
+```
 
 
 
