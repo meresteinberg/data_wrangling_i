@@ -16,7 +16,7 @@ This document will show how to import data.
 litters_df = read_csv("data/FAS_litters.csv")
 litters_df = janitor::clean_names(litters_df)
 ```
-Only using clean names function inside janitor package so we aren't going to load whole janitor package
+Only using the "clean names" function inside janitor package so we aren't going to load whole janitor package
 
 
 ## Look at the dataset
@@ -40,9 +40,9 @@ pups_df = janitor::clean_names(pups_df)
 pups_df
 ```
 
-use absolute path is putting whole path of file (couldnt make it work in class)
+use absolute path is putting whole path of file (couldnt make it work in class I think I fixed it)
 ```{r eval=FALSE}
-pups_df=read.csv(("/home/Desktop/data_wrangling_i  "))
+pups_df=read_csv(("/Users/meredithsteinberg/Desktop/data_wrangling_i/data/"))
 ```
 
 ## Look at read csv options
