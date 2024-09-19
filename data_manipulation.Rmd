@@ -187,6 +187,29 @@ command+shift+m for piping notation
 
 
 
+pipe whith the thing is the first argument
+
+```{r}
+read_csv("data/FAS_litters.csv", na = c("NA", "", ".")) |> 
+  janitor::clean_names() |> 
+  mutate(wt_gain = gd18_weight - gd0_weight) |> 
+  lm(wt_gain ~ pups_born_alive, data = _)
+```
 
 
+Data Export
+
+```{r}
+litters_df=
+  read_csv("data/FAS_litters.csv", na = c("NA", "", ".")) |> 
+  janitor::clean_names() |> 
+  select(-pups_born_alive) |> 
+  filter(group == "Con7") |> 
+  mutate(
+      wt_gain = gd18_weight - gd0_weight ,
+      group = str_to_lower(group)
+    )
+
+write_csv(litters_df, "data/cleaned_FAS_litters.csv")
+```
 
