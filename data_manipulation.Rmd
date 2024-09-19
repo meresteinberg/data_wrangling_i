@@ -212,4 +212,5 @@ litters_df=
 
 write_csv(litters_df, "data/cleaned_FAS_litters.csv")
 ```
+write_csv is exporting data
 
