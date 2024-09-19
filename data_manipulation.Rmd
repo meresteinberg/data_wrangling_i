@@ -125,7 +125,7 @@ drop_na(litters_df, gd0_weight)
 ```
 get rid of missing data. can drop NAs in everything or can drop NAs for specific variables
 
-###learning assessment pups
+### learning assessment pups
 ```{r}
 filter(pups_df, sex =="1")
 filter(pups_df, pd_walk < "11" , sex =="2")
@@ -168,6 +168,25 @@ arrange(litters_df, pups_born_alive, gd0_weight)
 order increasing by pups born alive and then gd0 weight
 
 
+## 'PIPING' !!!!!
 
-## 'PIPING'
+```{r}
+litters_df=
+  read_csv("data/FAS_litters.csv", na = c("NA", "", ".")) |> 
+  janitor::clean_names() |> 
+  select(-pups_born_alive) |> 
+  filter(group == "Con7") |> 
+  mutate(
+      wt_gain = gd18_weight - gd0_weight ,
+      group = str_to_lower(group)
+    )
+
+litters_df
+```
+command+shift+m for piping notation
+
+
+
+
+
 
