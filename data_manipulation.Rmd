@@ -214,3 +214,15 @@ write_csv(litters_df, "data/cleaned_FAS_litters.csv")
 ```
 write_csv is exporting data
 
+```{r}
+mtcars |> 
+  select (mpg)
+
+mtcars |> 
+  pull (mpg)
+```
+select will keep whole column and info rather than pull--look at output
+
+
+
+
