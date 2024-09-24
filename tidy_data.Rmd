@@ -1,0 +1,64 @@
+---
+title: "Tidy Data"
+output: github_document
+---
+```{r setup, echo = FALSE, message= FALSE}
+library(tidyverse)
+library(readxl)
+library(haven)
+```
+
+
+This document will show how to tidy data.
+
+```{r}
+pulse_df=
+  read_sas("data/public_pulse_data.sas7bdat") |> 
+  janitor::clean_names()
+pulse_df
+```
+This needs to go from wide to long format (with pivot longer)
+
+```{r}
+pulse_tidy_df=
+  pulse_df |> 
+  pivot_longer(
+    cols = bdi_score_bl: bdi_score_12m,
+    names_to = "visit",
+    values_to = "bdi_score",
+    names_prefix = "bdi_score_"
+  ) |> 
+  mutate(
+    visit= replace(visit, visit == "bl", "00m")
+  ) |> 
+  relocate(id, visit)
+pulse_tidy_df
+```
+
+Do one more example
+
+```{r}
+litters_df=
+  read_csv("data/FAS_litters.csv", na = c("NA", ".", "")) |> 
+  janitor::clean_names()
+```
+weight is spread across two diff columns, gd could be 0 and 18
+
+```{r}
+litters_tidy_df=
+  litters_df |> 
+  pivot_longer(
+    cols = gd0_weight:gd18_weight,
+    names_to = "gd_time",
+    values_to = "weight"
+  ) |> 
+  mutate(
+    gd_time = case_match(
+      gd_time,
+      "gd0_weight" ~ 0,
+      "gd18_weight" ~ 18
+    ))
+```
+gd_time and weight become two new columns above (also could do this without creating new tidy df and put all of this in one chunk with litters_df). Case match requires you to list out all options when replacing variable with something else
+
+
