@@ -115,7 +115,45 @@ lotr_df=
   mutate(race = str_to_lower(race))
 ```
 
+## Joing FAS datasets
+Import 'litters' dataset
+```{r}
+litters_df = 
+  read_csv("data/FAS_litters.csv" , na= c("NA", "", ".")) |> 
+  janitor::clean_names() |> 
+  mutate(
+    wt_gain = gd18_weight - gd0_weight
+  ) |> 
+  separate(
+    group, into = c("dose", "day_of_treatment"), sep = 3
+  )
 
+```
+separating group column into two columns. sep=3 means sep is after 3 characters
+
+
+
+Import 'pups' next
+```{r}
+pups_df=
+  read_csv("data/FAS_pups.csv", na = c("NA", "", ".")) |> 
+  janitor::clean_names() |> 
+  mutate(
+    sex = case_match(
+      sex,
+      1 ~ "male",
+      2 ~ "female"
+    )
+  )
+```
+
+Join the datasets
+
+```{r}
+fas_df=
+  left_join(pups_df, litters_df, by= "litter_number") |> 
+  relocate(litter_number, dose, day_of_treatment)
+```
 
 
 
