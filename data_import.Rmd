@@ -13,7 +13,7 @@ This document will show how to import data.
 
 ## Import the FAS Litters CSV and Fixing Column Names 
 ```{r}
-litters_df = read_csv("data/FAS_litters.csv")
+litters_df = read_csv("data/FAS_litters.csv") 
 litters_df = janitor::clean_names(litters_df)
 ```
 Only using the "clean names" function inside janitor package so we aren't going to load whole janitor package
